@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
@@ -66,7 +67,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class AppComponent {
   loginForm: FormGroup;
-  constructor() {
+  constructor(private httpClient:HttpClient) {
     this.loginForm = new FormGroup({
       email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, [
@@ -74,6 +75,9 @@ export class AppComponent {
         Validators.maxLength(12),
         Validators.minLength(8),
       ]),
+    });
+    this.httpClient.get('https://reqres.in/api/users/1').subscribe(data=>{
+      console.log(data);
     });
   }
 
